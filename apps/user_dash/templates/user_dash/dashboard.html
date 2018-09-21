@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO'
+        crossorigin='anonymous'>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49'
+        crossorigin='anonymous'></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy'
+        crossorigin='anonymous'></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    {% load static %}
+    <link rel='stylesheet' href='{% static "user_dash/css/index.css" %}'>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $(".delete").on( "click",function () {
+                $(this).next().toggleClass( "show" );
+            });
+
+            $(".unhide").on( "click",function () {
+                console.log("clicked")
+                $(this).parent().parent().parent().toggleClass( "show" );
+            });
+
+        })
+
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <div class="row center">
+            <div class="col-7">
+                <h1>User Dashboard</h1>
+            </div>
+            <div class="col-3">
+            </div>
+            <div class="col-1"><a class="btn btn-danger" href="/logout">Log Out</a></div>
+        </div>
+    </header>
+    <div class="main">
+        <div class="row">
+            <div id="banner">
+                <h1>Welcome {{ request.session.user_name }}!</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10">
+                <h2>Users:</h2>
+            </div>
+            <div class="col">
+                {% if request.session.user_level > 8 %}
+                    <a class="btn btn-primary" href="/edit">Add User</a>
+                {% endif %}
+            </div>
+        </div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date Joined</th>
+                    <th scope="col">User Level</th>
+                    {% if request.session.user_level > 8 %}
+                    <th scope="col">Actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="page_row">
+                    <th scope="row">{{ logged_user.id }}</th>
+                    <td><a href="/wall/{{ logged_user.id }}">{{ logged_user.first_name }} {{ logged_user.last_name }}</a></td>
+                    <td>{{ logged_user.email }}</td>
+                    <td>{{ logged_user.created_at }}</td>
+                    {% if logged_user.level > 8 %}
+                    <td>Admin</td>
+                    {% else %}
+                    <td>User</td>
+                    {% endif %}
+                    {% if request.session.user_level > 8 %}
+                        <td class="links"><a class="btn btn-success" href="/wall/{{ logged_user.id }}">View Your Page</a></td>
+                    {% endif %}
+                </tr>
+                {% for user in users %}
+                <tr>
+                    <th scope="row">{{ user.id }}</th>
+                    <td><a href="/wall/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a></td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.created_at }}</td>
+                    {% if user.level > 8 %}
+                        <td>Admin 
+                    {% else %}
+                        <td>User 
+                    {% endif %}
+                        {% if request.session.user_level > 8 %}
+                            <a class="black" href="/toggle/admin/{{ user.id }}"> &#x265A;</a>
+                        {% endif %}
+                    </td>
+                    {% if request.session.user_level > 8 %}
+                    <td class="links">
+                        <a class="btn btn-warning" href="/edit/{{ user.id }}">Edit</a> 
+                        <button class="delete btn btn-danger">Delete</button>
+                        <div class="pop_up">
+                            <p>Are you sure you want to remove this user permanently?</p>
+                            <div class="row">
+                                <div class="col">
+                                    <button class="unhide btn btn-success">Back</button>
+                                </div>
+                                <div class="col-4"></div>
+                                <div class="col">
+                                    <a class="btn btn-danger" href="/delete/{{ user.id }}">Yes, Delete User</a> 
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+header {
+    background-color: rgb(151, 150, 150);
+    margin-bottom: 10px; 
+}
+
+.button {
+    margin: 10px;
+}
+
+.black {
+    color: black;
+}
+
+.center {
+    max-width: 1100px;
+    margin: auto;
+    align-items: center;
+}
+
+.comment {
+    margin: 10px;
+}
+
+.comment_box {
+    width: 400px;
+    background-color: rgb(219, 219, 219);
+    border: 1px solid rgba(0, 0, 0, 0.473);
+    border-radius: 5px; 
+    padding: 5px;
+    margin: 15px 0 5px 0;
+}
+
+.main {
+    max-width: 1000px;
+    padding: 15px 25px;
+    background-color: rgb(196, 196, 196);
+    margin: auto;
+}
+
+.name {
+    margin: 10px;
+}
+
+.links {
+    padding: 5px!important;
+}
+
+.pop_up {
+    display: none;
+    position: absolute;
+    background-color: rgb(253, 253, 253);
+    top: 13%;
+    left: 50%;
+    margin-left: -225px; 
+    padding: 20px;
+    border-radius: 7px; 
+    border: 1px solid rgba(255, 0, 0, 0.733);
+    box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.99);
+}
+
+.red {
+    color: rgba(255, 0, 0, 0.664);
+}
+
+.space {
+    margin-bottom: 20px;
+}
+
+.show {
+    display: block!important;
+}
+
+.toggler {
+    margin-left: 10px; 
+    width: 600px;
+}
+
+.page_row {
+    border: 2px solid black!important;
+}
+
+#banner {
+    margin: auto;
+    display: inline-block;
+}
+
+#effect {
+    background-color: inherit;
+    border: none;
+}
