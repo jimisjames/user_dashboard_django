@@ -55,6 +55,7 @@ def form(request, user_id=None):
             user.first_name = request.POST["first_name"]
             user.last_name = request.POST["last_name"]
             user.email = request.POST["email"]
+            user.desc = request.POST["description"]
             user.password = bcrypt.hashpw(request.POST["password"].encode(), bcrypt.gensalt())
             user.save()
             return redirect("/dashboard")     #success
@@ -73,6 +74,7 @@ def form(request, user_id=None):
                 request.session["first_name"] = request.POST["first_name"]
                 request.session["last_name"] = request.POST["last_name"]
                 request.session["email"] = request.POST["email"]
+                request.session["desc"] = request.POST["description"]
                 return redirect("/edit")     #failure
 
     else:
